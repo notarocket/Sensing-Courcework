@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CourceWorkMobile</string>
+    <string name="title_activity_bluetooth_device_list">bluetooth_device_list</string>
+</resources>
