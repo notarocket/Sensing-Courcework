@@ -1,7 +1,10 @@
 package com.example.courceworkmobile;
 
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.BluetoothLeScanner;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.ScanResult;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +19,7 @@ import java.util.List;
 public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdapter.ViewHolder> {
 
     public int position;
-    public List<Object> deviceList;
+    public List<BluetoothDevice> deviceList;
     public bluetooth_device_list bluetooth_device_list = new bluetooth_device_list();
     public Context context;
     public Intent returnIntent;
@@ -34,7 +37,7 @@ public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdap
 
     }
 
-    public BluetoothListAdapter(Context context, List<Object> deviceList){
+    public BluetoothListAdapter(Context context, List<BluetoothDevice> deviceList){
         this.context=context;
         this.deviceList = deviceList;
     }
@@ -47,11 +50,11 @@ public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdap
     }
     public void onBindViewHolder(ViewHolder holder, final int position){
         //Used to declare and find all the buttons and text views in the custom layout.
-        final BluetoothDeviceInfo bluetoothDeviceInfo = (BluetoothDeviceInfo) deviceList.get(position);
+        final BluetoothDevice bluetoothDeviceInfo = (BluetoothDevice) deviceList.get(position);
         TextView[] deviceName = new TextView[deviceList.size()];
         deviceName[position] = holder.view.findViewById(R.id.device_name);
-        System.out.println(bluetoothDeviceInfo.getDeviceName());
-        deviceName[position].setText(bluetoothDeviceInfo.getDeviceName());
+        System.out.println(bluetoothDeviceInfo.getName());
+        deviceName[position].setText(bluetoothDeviceInfo.getAddress());
         Button[] select = new Button[deviceList.size()];
         select[position] = holder.view.findViewById(R.id.select);
 
@@ -60,8 +63,9 @@ public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdap
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra("deviceName", bluetoothDeviceInfo.getDeviceName());
-                intent.putExtra("deviceHardware", bluetoothDeviceInfo.getDeviceHardware());
+                boolean setnew = true;
+                intent.putExtra( "device", bluetoothDeviceInfo);
+                intent.putExtra("isTrue", true);
                 context.startActivity(intent);
                 ((com.example.courceworkmobile.bluetooth_device_list) context).finish();
 
