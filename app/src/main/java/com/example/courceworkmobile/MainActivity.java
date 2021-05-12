@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     public RecyclerView pcrecyclerView;
     private RecyclerView.Adapter pcAdapter;
     public static Handler handler;
-    public static BluetoothService.ConnectedThread connectedThread;
     private List<BluetoothGattService> services = new ArrayList<>();
     private List<BluetoothGattCharacteristic> characteristics = new ArrayList<>();
     public List<String> pcStatusList = new ArrayList<>();
