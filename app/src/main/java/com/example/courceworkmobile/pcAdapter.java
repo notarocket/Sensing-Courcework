@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.particle.android.sdk.utils.Py.set;
+
 public class pcAdapter extends RecyclerView.Adapter<pcAdapter.ViewHolder> {
 
     public int position;
@@ -80,7 +82,7 @@ public class pcAdapter extends RecyclerView.Adapter<pcAdapter.ViewHolder> {
         onoffButton[position] = holder.view.findViewById(R.id.onoffButton);
         Button[] delButton = new Button[deviceHardware.size()];
         delButton[position] = holder.view.findViewById(R.id.select);
-        TextView[] deviceNameTxt = new TextView[deviceHardware.size()];
+        final EditText[] deviceNameTxt = new EditText[deviceHardware.size()];
         deviceNameTxt[position] = holder.view.findViewById(R.id.pcName);
         TextView[] pcStatusTxt = new TextView[deviceHardware.size()];
         pcStatusTxt[position] = holder.view.findViewById(R.id.pcStatus);
@@ -111,6 +113,14 @@ public class pcAdapter extends RecyclerView.Adapter<pcAdapter.ViewHolder> {
 
                 }else{
 
+                }
+            }
+        });
+        deviceNameTxt[position].setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    deviceName.set(position,deviceNameTxt[position].getText().toString());
                 }
             }
         });
